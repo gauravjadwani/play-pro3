@@ -10,6 +10,9 @@ include '../controllers/connection.php';
     {
          $user_id=$r->hget('email:user',$email);
         
+         $zcore_user=$r->zscore('state:user',$user_id);
+         if($zcore_user==1)
+         {
         
     //$hashed_password=sha1($password);
      $check_hash=$r->hget('user:'.$user_id,'password_hash');
@@ -18,13 +21,14 @@ include '../controllers/connection.php';
                 {
          session_start();
             $_SESSION["email"]=$email;
-            $name=$r->hget($email,'name');
+            $name=$r->hget('user:'.$user_id,'name');
+            echo $name;
             $_SESSION["name"]=$name;
            
             $_SESSION["user_id"]=$user_id;
                     
             
-            header("Location: ../views/dashboard.php");
+                header("Location: ../views/dashboard.php");
 } 
 else {
     echo "wrong password";
@@ -32,7 +36,9 @@ else {
    //include 'error.php';
         
 }
-     
+         }
+         else
+             echo "user acsess-denied and zcore is ".$zcore_user;
      
        }
  else {
