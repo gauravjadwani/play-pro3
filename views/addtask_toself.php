@@ -40,6 +40,7 @@
     <li><a href="../views/user_projects.php"><span class="glyphicon glyphicon-log-in"></span>VIEW PROJECTS</a></li>
     <li><a href="../views/view_as_date.php"><span class="glyphicon glyphicon-log-in"></span>VIEW TASK BY DATE</a></li>
     
+    
         
     <li><a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i>Logout</a></li>
     
@@ -56,7 +57,7 @@
         
         
         
-        <form action="../controllers/addtask_toproject.php" method="POST">
+        <form action="../controllers/addtask_toself.php" method="POST">
         
 <div class="container">
     <div class="row">
@@ -78,68 +79,13 @@
                 
                 
                 </div>
-            <div class="row">
-                <hr>
-            <div class='col-md-2'>
-  <label for="sel1">Select Project:</label>
- 
-            </div>
-            <div class='col-md-10'>
-                
-                <select class="form-control" name="project_id">
-      
-      
-      
-      
-      <?php
-                // echo "guarav";
-                      
-        $projects=$r->smembers('projects:'.$user_id);
-       
-
- //echo "fdfd".var_dump($projects);   
-foreach($projects as $p_id)
-    {
-    $state_projects=$r->zscore('state:projects',$p_id);
-    if($state_projects==0)
-    {
-    $projects_groupid=$r->hget('project:'.$p_id,'associated_group');
-$user_idd=$r->zrangebyscore('group_permissions:'.$projects_groupid,'1','2');
-foreach($user_idd as $c2)
-{
-if($c2==$user_id)
-{   
-                 
-     $project_details=$r->hvals('project:'.$p_id);            
-  //echo var_dump($c2);         
-            // */   
-    
- ?>
- 
-       
-      <option value="<?php echo $p_id;?>"><?php echo "the project name is :".$project_details[0];?></option>
-  
-      
-      <?php
-      
-}
-}
-    }
-    }
-       
-      ?>
-      
-      
-      
-      
-      </select>
-            </div>
+            
                 
                 
                 
                 
                 </div>
-            </div>
+            
         
         <div class="col-md-6">
             <div class="row">
@@ -159,14 +105,15 @@ if($c2==$user_id)
       <label for = "email" class = "col-md-2 control-label" style="font-size: 20px">Priority</label>
 		
       <div class = "col-md-7">
-       <input type = "number" class = "form-control" name = "priority" placeholder ="Enter Priority" min="1">
+       <input type = "number" class = "form-control" name = "priority" placeholder ="Enter Priority" min="0">
       </div>
       <div class="col-sm-3">
           </div>
    
               </div>
             </div>&nbsp
-            
+            <hr>
+             
                 <div class="row">
                     <div class="col-md-2">
                         
@@ -187,6 +134,7 @@ if($c2==$user_id)
             
         </div>
 </div>
+        </div>
         </div>
     </div>
     </div>

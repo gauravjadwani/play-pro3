@@ -70,7 +70,7 @@ include_once '../controllers/init_session.php';
 
             <?php
             //if(!empty($_POST['date']))
-            require_once 'display_tasks_self.php';
+            require_once 'display_pending_self_tasks.php';
             ?>
       </ul>
       

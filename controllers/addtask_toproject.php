@@ -6,7 +6,7 @@
 
         $current_time=time();
         
-        if(!empty($_POST['date'])&&!empty($_POST['task'])&&!empty($_POST['priority']))
+        if(isset($_POST['date'])&&isset($_POST['task'])&&isset($_POST['priority']))
 
             {
 
@@ -30,7 +30,7 @@
    
     
    
-    $r->hMset('task:'.$task_id, array('name' => $task,'assinged_for'=>$date,'introduced_on'=>$current_date,'association'=>'project:'.$project_id,'initiators_id'=>$user_id));
+    $r->hMset('task:'.$task_id, array('name' => $task,'assinged_for'=>$date,'introduced_on'=>$current_time,'association'=>'project:'.$project_id,'initiators_id'=>$user_id));
     
    
    
@@ -44,7 +44,7 @@
     $current_date=time();
  $group_permissions=$r->zrange("group_permissions:".$associated_group,'0','-1');
     
- echo var_dump($group_permissions);   
+ //echo var_dump($group_permissions);   
  foreach($group_permissions as $c)
     {
         
