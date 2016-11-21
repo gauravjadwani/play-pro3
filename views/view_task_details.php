@@ -78,18 +78,21 @@ else if(isset($_REQUEST['project_id']))
     echo "created on:".$hash[1]."<br>";
     echo "description:".$hash[2]."<br>";
     echo "deadline:".$hash[3]."<br>";
-    echo "status:".$hash[4]."<br>";
+    //echo "status:".$hash[4]."<br>";
     //echo $hash[4];
-    $group_id=$hash[5];
+    $group_id=$hash[4];
     
     $list_members=$r->zrange('group_permissions:'.$group_id,0,-1);
    
     print "<h1>list of group associates</h1>";
 
-            foreach ($list_members as $email)
+            foreach ($list_members as $user)
             {
-            
-    echo $email."<br>";
+            $user_details=$r->hvals('user:'.$user);
+    echo "name:".$user_details[0]."<br>";
+     echo "email:".$user_details[2]."<br>";
+                
+      echo "<hr>";
             }
 } 
 ?>

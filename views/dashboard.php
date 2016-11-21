@@ -84,7 +84,7 @@ include_once '../controllers/init_session.php';
             <hr>
                 <?php
                  
-    require_once  'dispaly_pending_projects.php';
+    require_once  'display_pending_projects.php';
                 
                 ?>
                 </ul>
