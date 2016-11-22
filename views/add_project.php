@@ -132,7 +132,7 @@ if($c2==$user_id)
  ?>
  
        
-      <option><?php echo "the group name is :".$group_details[0];?></option>
+      <option value="<?php echo $projects_groupid;?>"><?php echo "the group name is :".$group_details[0];?></option>
   
       
       <?php

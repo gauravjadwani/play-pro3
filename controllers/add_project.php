@@ -108,8 +108,9 @@ $r->hincrby('parent','group_id',1);
         {
    
     
-     $r->hMset('project:'.$project_id, array('name' => $name_project,'created_on'=>$current_date,'description'=>$decription,'deadline'=>$date,'status'=>'pending','associated_group'=>$form_group_id));
+     $r->hMset('project:'.$project_id, array('name' => $name_project,'created_on'=>$current_date,'description'=>$decription,'deadline'=>$date,'associated_group'=>$form_group_id));
     //echo 'from_group:'.$form_group_id.'<br>'; 
+     $r->sadd("projects:".$user_id,$project_id);
       $r->zadd("notifications:".$user_id,$current_time,"you created the project ".$name_project."with the group id ".$form_group_id);
      
       $r->sadd("projects_group:".$form_group_id,$project_id);

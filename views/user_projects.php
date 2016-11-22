@@ -70,10 +70,11 @@ include_once '../controllers/init_session.php';
       
       foreach($project_list as $pro)
       {
-          
+          $chk="";
       $project_details=$r->hvals('project:'.$pro);
       $group_id=$project_details[4];
       $group_details=$r->hvals('group:'.$group_id);
+      
       
       ?>
       <tr>
@@ -81,7 +82,7 @@ include_once '../controllers/init_session.php';
         <td><?php echo $project_details[1];?></td>
         <td><?php echo $project_details[2];?></td>
         <td><?php echo $project_details[3];?></td>
-        <td><?php $project_score=$r->zscore('state:projects',$pro); if($project_score==0) echo "active";?></td>
+        <td><?php $project_score=$r->zscore('state:projects',$pro); if($project_score==0) echo "active"; elseif($project_score==1){ echo "completed";$chk="disabled";}?></td>
         <td><?php echo $group_details[0];?></td>
         <td><?php $group_score=$r->zscore('state:group',$group_id); if($project_score==0) echo "active";?></td>
         
@@ -107,11 +108,12 @@ include_once '../controllers/init_session.php';
       <td>
       
       <?php
-      $group_members=$r->zrangebyscore('group_permissions:'.$group_id,1,2);
+      $group_members=$r->zrangebyscore('group_permissions:'.$group_id,'1','2');
       $x=array_search($user_id,$group_members);
       
-      if(!empty($x))
-      print '<form action="" method="POST"><input type="submit"  name="delete_project"></form>';
+      //echo $x;
+      if($group_members[$x]==$user_id)
+      print '<form action="" method="POST"><input type="hidden" value='.$pro.' name="hide"><input type="submit"  name="complete_project" '.$chk.'></form>';
       
       
       
@@ -125,36 +127,43 @@ include_once '../controllers/init_session.php';
               
               
               
-              
-              
+       <?php
+      }
+      
+      
+      
+      if(isset($_POST["complete_project"])) 
+{
+/*
+ "http://localhost/play-pro3/controllers/complete_task.php"
+ */
+    $project_id=$_POST["hide"];
+$ch = curl_init("http://".$_SERVER['SERVER_NAME']."/play-pro3/controllers/complete_project.php");
+
+curl_setopt($ch,CURLOPT_POST, true);
+
+curl_setopt($ch,CURLOPT_POSTFIELDS,"project_id=$project_id");
+curl_setopt($ch,CURLOPT_HEADER,0);
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER,false );
+$resp = curl_exec($ch);
+curl_close($ch);
+//exit();
+header('Location: user_projects.php');
 
 
+/*
+http://localhost/play-pro3/views/dashboard.php
+ */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-              <?php
-      }?>
+}
+      
+      
+      
+      
+      
+      
+      ?>
       
       
     </tbody>
