@@ -61,6 +61,7 @@ include_once '../controllers/init_session.php';
         
         <th>ASSOCIATED GROUP STATUS</th>
         <th>ASSOCIATED TASK</th>
+        <th>DELETE PROJECT</th>
       </tr>
     </thead>
     <tbody>
@@ -100,9 +101,59 @@ include_once '../controllers/init_session.php';
        
         
         <?php }?>
-          </td></tr>
+          </td>
+          
+      
+      <td>
       
       <?php
+      $group_members=$r->zrangebyscore('group_permissions:'.$group_id,1,2);
+      $x=array_search($user_id,$group_members);
+      
+      if(!empty($x))
+      print '<form action="" method="POST"><input type="submit"  name="delete_project"></form>';
+      
+      
+      
+      
+      ?>
+      
+      
+      
+      
+      </td>
+              
+              
+              
+              
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <?php
       }?>
       
       
