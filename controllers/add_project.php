@@ -28,7 +28,9 @@ include_once '../controllers/init_session.php';
    {
    
        $r->hMset('group:'.$group_id, array('name' => $name_group,'created_on'=>$date,'closed_on'=>'live'));
-   $r->zadd("group_permissions:".$group_id,'1',$user_id);
+   $che=$r->zadd("group_permissions:".$group_id,1,$user_id);
+   echo var_dump($che);
+   
    $r->zadd("state:projects",'0',$project_id);
    $r->zadd("notifications:".$user_id,$current_time,"you added yourself as the group owner in the ".$name_group);
  
