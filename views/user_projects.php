@@ -98,7 +98,7 @@ include_once '../controllers/init_session.php';
         //echo var_dump($task_details);
         ?>
         
-            <a href="../play-pro3/views/view_task_details.php?task_id=<?php echo $t.'">'; echo $task_details[0]."<br>";?></a><br>
+            <a href="../views/view_task_details.php?task_id=<?php echo $t.'">'; echo $task_details[0]."<br>";?></a><br>
        
         
         <?php }?>
