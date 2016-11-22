@@ -50,8 +50,11 @@ print '<form action="" method="POST"><input type="submit"  name="submit"></form>
 //$_SESSION['name']='gaurav';
 if(isset($_POST["submit"])) 
 {
-
-$ch = curl_init("http://localhost/play-pro3/controllers/complete_task.php");
+/*
+ "http://localhost/play-pro3/controllers/complete_task.php"
+ */
+    
+$ch = curl_init("http://".$_SERVER['SERVER_NAME']."/play-pro3/controllers/complete_task.php");
 
 curl_setopt($ch,CURLOPT_POST, true);
 
@@ -61,7 +64,12 @@ curl_setopt($ch,CURLOPT_HEADER,0);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER,false );
 $resp = curl_exec($ch);
 curl_close($ch);
-header('Location: http://localhost/play-pro3/views/dashboard.php');
+header('Location: dashboard.php');
+
+
+/*
+http://localhost/play-pro3/views/dashboard.php
+ */
 
 }
 
