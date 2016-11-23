@@ -10,12 +10,13 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
     $current_time=time();
     
     
-    
-    
+    $check_email= $r->hexists('email:user',$email);
+    if($check_email==0)
+    {
     
     
    
-    $r->hsetnx('parent','user_id','1');
+    $r->hsetnx('parent','user_inotwd','1');
     $r->hsetnx('parent','project_id','1');
     $r->hsetnx('parent','task_id','1');
    
@@ -46,5 +47,8 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
     else 
         echo "non-comit";
 $r->hincrby('parent','user_id',1);
+}
+else
+    header("location: ../views/modal.php?q=your email is registered with us!");
 }
 ?>
