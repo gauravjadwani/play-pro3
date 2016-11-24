@@ -25,7 +25,7 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
     
    $check_email=$r->hsetnx('email:user',$email,$user_id);
    $check_contact=$r->hsetnx('contact:user',$mobile,$user_id);
-    echo $check_hash;
+    //echo $check_hash;
      if($check_email===FALSE)
      {
          //require_once "../views/sign_up.html";
@@ -36,9 +36,17 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
      {
          //calling email.php
          
-         
+   
+         include_once 'send_mail.php'; 
+
+
+
+
      }
-     if($check_contact===FALSE)
+     
+
+
+ if($check_contact===FALSE)
      {
         header("location: ../views/modal.php?q=your contact is registered with us!");
          exit();  
@@ -69,6 +77,11 @@ http://localhost/play-pro3/views/dashboard.php
  */
 
      }
+         
+     
+    
+
+     
     
     
     $check=$r->hMset('user:'.$user_id, array('name' =>$name, 'mobile' =>$mobile,'email'=>$email,'password_hash'=>$hashed_password,'timestamp'=>$current_time)); 
@@ -80,10 +93,17 @@ http://localhost/play-pro3/views/dashboard.php
    if($check==1)
     { 
     echo "e";
+    //exit();
         header("location: ../views/login.html");
     }
     else 
         echo "non-comit";
 $r->hincrby('parent','user_id',1);
 }
+
+
+
+
+
+
 ?>

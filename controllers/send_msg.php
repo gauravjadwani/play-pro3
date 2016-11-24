@@ -6,7 +6,7 @@ $ch = curl_init();
 $user="gauravjadwani93@gmail.com:9044297421";
 $receipientno=$recieved[0]; 
 $senderID="TEST SMS"; 
-$msgtxt="thanks for registering on To-do ".$recieved[1]." regards:TEAM E-GURU"; 
+$msgtxt="Thanks for registering on To-do ".$recieved[1]." regards:TEAM E-GURU"; 
 curl_setopt($ch,CURLOPT_URL,  "http://api.mVaayoo.com/mvaayooapi/MessageCompose");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_POST, 1);
