@@ -11,7 +11,7 @@ if($group_id!='default')
     
     $group_id_name=$r->hget("group:".$group_id,'name');
     $current_time=time();
-    echo $group_id."<br>";
+    //echo $group_id."<br>";
     if(!empty($list_modify))
     {
 $split_email= split(",",$list_modify); 
@@ -77,7 +77,7 @@ for($i=0;$i<sizeof($split_email);$i++)
     
     
     
-    //header('Location: ../views/add_members_groups.php');
+  header('Location: ../views/add_members_groups.php');
     
     
     
