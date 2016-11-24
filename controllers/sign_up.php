@@ -10,9 +10,8 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
     $current_time=time();
     
     
-    $check_email= $r->hexists('email:user',$email);
-    if($check_email==0)
-    {
+    //$check_email= $r->hexists('email:user',$email);
+    
     
     
    
@@ -24,12 +23,20 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
     $user_id=$r->hget('parent','user_id');
     
     
-   $check_hash=$r->hsetnx('email:user',$email,$user_id);
+   $check_email=$r->hsetnx('email:user',$email,$user_id);
+   $check_contact=$r->hsetnx('contact:user',$mobile,$user_id);
     echo $check_hash;
-     if($check_hash==0)
+     if($check_email===FALSE)
      {
-         require_once "../views/sign_up.html";
+         //require_once "../views/sign_up.html";
+          header("location: ../views/modal.php?q=your email is registered with us!");
          exit();
+     }
+     if($check_contact===FALSE)
+     {
+        header("location: ../views/modal.php?q=your contact is registered with us!");
+         exit();  
+         
      }
     
     
@@ -47,8 +54,5 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
     else 
         echo "non-comit";
 $r->hincrby('parent','user_id',1);
-}
-else
-    header("location: ../views/modal.php?q=your email is registered with us!");
 }
 ?>
