@@ -31,6 +31,7 @@ include_once '../controllers/init_session.php';
       
     <li><a href="add_task.php"><span class="glyphicon glyphicon-log-in"></span> ADD_TASK</a></li>
     <li><a href="../views/add_project.php"><span class="glyphicon glyphicon-log-in"></span>ADD PROJECT</a></li>
+     <li><a href="add_members_groups.php"><span class="glyphicon glyphicon-log-in"></span> ADD_GROUP_MEMBERS</a></li>
     <li><a href="../views/user_projects.php"><span class="glyphicon glyphicon-log-in"></span>VIEW PROJECTS</a></li>
     <li><a href="view_as_date.php"><span class="glyphicon glyphicon-log-in"></span>VIEW TASK AS DATE</a></li>
         
@@ -70,7 +71,7 @@ include_once '../controllers/init_session.php';
 
             <?php
             //if(!empty($_POST['date']))
-            require_once 'display_tasks_self.php';
+            require_once 'display_pending_self_tasks.php';
             ?>
       </ul>
       
@@ -84,7 +85,7 @@ include_once '../controllers/init_session.php';
             <hr>
                 <?php
                  
-    require_once  'dispaly_pending_projects.php';
+    require_once  'display_pending_projects.php';
                 
                 ?>
                 </ul>

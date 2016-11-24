@@ -10,12 +10,12 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
     $current_time=time();
     
     
-    
+    //$check_email= $r->hexists('email:user',$email);
     
     
     
    
-    $r->hsetnx('parent','user_id','1');
+    $r->hsetnx('parent','user_inotwd','1');
     $r->hsetnx('parent','project_id','1');
     $r->hsetnx('parent','task_id','1');
    
@@ -23,13 +23,65 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
     $user_id=$r->hget('parent','user_id');
     
     
-   $check_hash=$r->hsetnx('email:user',$email,$user_id);
-    echo $check_hash;
-     if($check_hash==0)
+   $check_email=$r->hsetnx('email:user',$email,$user_id);
+   $check_contact=$r->hsetnx('contact:user',$mobile,$user_id);
+    //echo $check_hash;
+     if($check_email===FALSE)
      {
-         require_once "../views/sign_up.html";
+         //require_once "../views/sign_up.html";
+          header("location: ../views/modal.php?q=your email is registered with us!");
          exit();
      }
+     else
+     {
+         //calling email.php
+         
+   
+         include_once 'send_mail.php'; 
+
+
+
+
+     }
+     
+
+
+ if($check_contact===FALSE)
+     {
+        header("location: ../views/modal.php?q=your contact is registered with us!");
+         exit();  
+         
+     }
+     else
+     {
+         //calling sms.php
+        
+
+
+    
+$ch = curl_init("http://".$_SERVER['SERVER_NAME']."/play-pro3/controllers/send_msg.php");
+
+curl_setopt($ch,CURLOPT_POST, true);
+
+curl_setopt($ch,CURLOPT_POSTFIELDS,"details=$mobile:$name");
+curl_setopt($ch,CURLOPT_HEADER,0);
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER,false );
+$resp = curl_exec($ch);
+curl_close($ch);
+//header('Location: dashboard.php');
+
+
+/*
+http://localhost/play-pro3/views/dashboard.php
+ */
+
+     }
+         
+     
+    
+
+     
     
     
     $check=$r->hMset('user:'.$user_id, array('name' =>$name, 'mobile' =>$mobile,'email'=>$email,'password_hash'=>$hashed_password,'timestamp'=>$current_time)); 
@@ -41,10 +93,17 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
    if($check==1)
     { 
     echo "e";
+    //exit();
         header("location: ../views/login.html");
     }
     else 
         echo "non-comit";
 $r->hincrby('parent','user_id',1);
 }
+
+
+
+
+
+
 ?>
