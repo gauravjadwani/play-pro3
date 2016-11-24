@@ -32,11 +32,42 @@ if(!empty($_POST['name'])&&!empty($_POST['mobile'])&&!empty($_POST['passwd'])&&!
           header("location: ../views/modal.php?q=your email is registered with us!");
          exit();
      }
+     else
+     {
+         //calling email.php
+         
+         
+     }
      if($check_contact===FALSE)
      {
         header("location: ../views/modal.php?q=your contact is registered with us!");
          exit();  
          
+     }
+     else
+     {
+         //calling sms.php
+        
+
+
+    
+$ch = curl_init("http://".$_SERVER['SERVER_NAME']."/play-pro3/controllers/send_msg.php");
+
+curl_setopt($ch,CURLOPT_POST, true);
+
+curl_setopt($ch,CURLOPT_POSTFIELDS,"details=$mobile:$name");
+curl_setopt($ch,CURLOPT_HEADER,0);
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER,false );
+$resp = curl_exec($ch);
+curl_close($ch);
+//header('Location: dashboard.php');
+
+
+/*
+http://localhost/play-pro3/views/dashboard.php
+ */
+
      }
     
     
